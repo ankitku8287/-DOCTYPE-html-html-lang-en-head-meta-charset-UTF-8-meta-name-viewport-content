@@ -1,0 +1,52 @@
+class Product:
+    def __init__(self, name, price, quantity):
+        self.name = name
+        self.price = price
+        self.quantity = quantity
+
+class ShoppingCart:
+    def __init__(self):
+        self.items = []
+
+    def add_item(self, product, quantity):
+        self.items.append((product, quantity))
+
+    def remove_item(self, product):
+        for item in self.items:
+            if item[0] == product:
+                self.items.remove(item)
+                break
+
+    def calculate_total(self):
+        total = 0
+        for item in self.items:
+            total += item[0].price * item[1]
+        return total
+
+class User:
+    def __init__(self, name):
+        self.name = name
+        self.cart = ShoppingCart()
+
+    def add_to_cart(self, product, quantity):
+        self.cart.add_item(product, quantity)
+
+    def remove_from_cart(self, product):
+        self.cart.remove_item(product)
+
+    def checkout(self):
+        total = self.cart.calculate_total()
+        print(f"Total amount to pay: ${total}")
+        # Here you would add code for payment processing, order confirmation, etc.
+
+# Example usage:
+user = User("John")
+product1 = Product("Phone", 500, 1)
+product2 = Product("Laptop", 1000, 1)
+
+user.add_to_cart(product1, 2)
+user.add_to_cart(product2, 1)
+
+user.cart.remove_item(product1)
+
+user.checkout()
